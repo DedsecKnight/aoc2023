@@ -25,7 +25,6 @@ impl Solution<u32, u32> for Day1 {
         total
     }
     fn part_two<'a>(lines: impl Iterator<Item = &'a str>) -> u32 {
-        // todo!()
         let mut total = 0;
         let num_map: HashMap<&'static str, u32> = HashMap::from([
             ("one", 1),
