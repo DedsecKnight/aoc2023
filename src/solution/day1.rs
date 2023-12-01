@@ -1,6 +1,9 @@
+use macros::return_type;
+
 use crate::solution::Solution;
 use std::collections::HashMap;
 
+#[return_type(p1 = u32, p2 = u32)]
 pub struct Day1;
 
 impl Solution<u32, u32> for Day1 {

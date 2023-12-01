@@ -1,5 +1,5 @@
 #[macro_use] extern crate prettytable;
-use macros::today;
+use macros::{today, today_result};
 use prettytable::Table;
 use chrono::prelude::*;
 use dotenv::dotenv;
@@ -17,7 +17,7 @@ fn get_current_day() -> u32 {
     tz_offset.from_utc_datetime(&t.naive_utc()).day()
 }
 
-fn run_sample_cases() -> Result<(u32, u32), Box<dyn Error>> {
+fn run_sample_cases() -> Result<today_result!(), Box<dyn Error>> {
     let sample_input_data = fs::read_to_string("sample.txt")?;
     Ok((
         <today!()>::part_one(sample_input_data.lines()),
@@ -25,7 +25,7 @@ fn run_sample_cases() -> Result<(u32, u32), Box<dyn Error>> {
     ))
 }
 
-fn run_main_case() -> Result<(u32, u32), Box<dyn Error>> {
+fn run_main_case() -> Result<today_result!(), Box<dyn Error>> {
     let today = get_current_day();
     let client = Client::new();
     let login_session =
