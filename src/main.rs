@@ -58,7 +58,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let (sample_p1, sample_p2) = run_sample_cases()?;
     let (main_p1, main_p2) = run_main_case()?;
     println!("");
-    table.add_row(row!["", "Part 1", "Part 2"]);
+    table.add_row(row![format!("d = {}", get_current_day()), "Part 1", "Part 2"]);
     table.add_row(row!["Sample input", sample_p1, sample_p2]);
     table.add_row(row!["Main input", main_p1, main_p2]);
     table.printstd();
