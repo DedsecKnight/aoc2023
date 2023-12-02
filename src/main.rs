@@ -1,8 +1,9 @@
-#[macro_use] extern crate prettytable;
-use macros::{today, today_result};
-use prettytable::Table;
+#[macro_use]
+extern crate prettytable;
 use chrono::prelude::*;
 use dotenv::dotenv;
+use macros::{today, today_result};
+use prettytable::Table;
 use reqwest::blocking::Client;
 use reqwest::{header, Method};
 use solution::Solution;
@@ -18,10 +19,10 @@ fn get_current_day() -> u32 {
 }
 
 fn run_sample_cases() -> Result<today_result!(), Box<dyn Error>> {
-    let sample_input_data = fs::read_to_string("../../sample.txt")?;
+    let sample_input_data = fs::read_to_string("sample.txt")?;
     Ok((
         <today!()>::part_one(sample_input_data.lines()),
-        <today!()>::part_two(sample_input_data.lines())
+        <today!()>::part_two(sample_input_data.lines()),
     ))
 }
 
@@ -42,7 +43,7 @@ fn run_main_case() -> Result<today_result!(), Box<dyn Error>> {
             let input_data = res.text()?;
             Ok((
                 <today!()>::part_one(input_data.lines()),
-                <today!()>::part_two(input_data.lines())
+                <today!()>::part_two(input_data.lines()),
             ))
         }
         Err(err) => {
@@ -58,7 +59,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let (sample_p1, sample_p2) = run_sample_cases()?;
     let (main_p1, main_p2) = run_main_case()?;
     println!("");
-    table.add_row(row![format!("d = {}", get_current_day()), "Part 1", "Part 2"]);
+    table.add_row(row![
+        format!("d = {}", get_current_day()),
+        "Part 1",
+        "Part 2"
+    ]);
     table.add_row(row!["Sample input", sample_p1, sample_p2]);
     table.add_row(row!["Main input", main_p1, main_p2]);
     table.printstd();
