@@ -43,34 +43,31 @@ impl Day2 {
 }
 
 impl Solution<u32, u32> for Day2 {
-    fn part_one<'a>(lines: impl Iterator<Item = &'a str>) -> u32 {
-        let mut ret = 0;
-        for (i, line) in lines.enumerate() {
-            let matches_data = Day2::parse_game_data(line);
-            let valid_match = matches_data.iter().all(|match_data| {
-                match_data.red <= 12 && match_data.blue <= 14 && match_data.green <= 13
-            });
-            if valid_match {
-                ret += (i as u32) + 1;
-            }
-        }
-        ret
+    fn part_one<'a>(games: impl Iterator<Item = &'a str>) -> u32 {
+        games
+            .enumerate()
+            .filter(|(_, game_data)| {
+                Day2::parse_game_data(*game_data).iter().all(|match_data| {
+                    match_data.red <= 12 && match_data.green <= 13 && match_data.blue <= 14
+                })
+            })
+            .fold(0u32, |acc, x| acc + (x.0 as u32) + 1)
     }
-    fn part_two<'a>(lines: impl Iterator<Item = &'a str>) -> u32 {
-        let mut ret = 0u32;
-        for line in lines {
-            let matches_data = Day2::parse_game_data(line);
-            let max_red = matches_data
-                .iter()
-                .fold(0u32, |acc, curr| std::cmp::max(acc, curr.red));
-            let max_green = matches_data
-                .iter()
-                .fold(0u32, |acc, curr| std::cmp::max(acc, curr.green));
-            let max_blue = matches_data
-                .iter()
-                .fold(0u32, |acc, curr| std::cmp::max(acc, curr.blue));
-            ret += max_red * max_green * max_blue;
-        }
-        ret
+    fn part_two<'a>(games: impl Iterator<Item = &'a str>) -> u32 {
+        games
+            .map(|game| {
+                let matches_data = Day2::parse_game_data(game);
+                let max_red = matches_data
+                    .iter()
+                    .fold(0u32, |acc, curr| std::cmp::max(acc, curr.red));
+                let max_green = matches_data
+                    .iter()
+                    .fold(0u32, |acc, curr| std::cmp::max(acc, curr.green));
+                let max_blue = matches_data
+                    .iter()
+                    .fold(0u32, |acc, curr| std::cmp::max(acc, curr.blue));
+                max_red * max_green * max_blue
+            })
+            .sum()
     }
 }
