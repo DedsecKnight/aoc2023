@@ -18,7 +18,7 @@ fn get_current_day() -> u32 {
 }
 
 fn run_sample_cases() -> Result<today_result!(), Box<dyn Error>> {
-    let sample_input_data = fs::read_to_string("sample.txt")?;
+    let sample_input_data = fs::read_to_string("../../sample.txt")?;
     Ok((
         <today!()>::part_one(sample_input_data.lines()),
         <today!()>::part_two(sample_input_data.lines())
