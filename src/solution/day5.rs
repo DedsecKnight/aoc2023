@@ -82,11 +82,11 @@ impl Solution<i64, i64> for Day5 {
         lines.nth(1).unwrap();
         let mappings: Vec<Vec<(i64, i64, i64)>> =
             (0..7).map(|_| Day5::parse_map(&mut lines)).collect();
+        let mut remaining_ranges: VecDeque<QueueElement> = VecDeque::new();
         for mapping in mappings.iter() {
             let mut new_seeds_data = Vec::new();
-            for seed_range in seeds_data.iter() {
-                let mut remaining_ranges: VecDeque<QueueElement> = VecDeque::new();
-                remaining_ranges.push_back(QueueElement::Value(seed_range.clone()));
+            for seed_range in seeds_data.into_iter() {
+                remaining_ranges.push_back(QueueElement::Value(seed_range));
                 for mapping_range in mapping.iter() {
                     remaining_ranges.push_back(QueueElement::Sentinel);
                     while let Some(QueueElement::Value(curr_seed_range)) =
@@ -119,7 +119,7 @@ impl Solution<i64, i64> for Day5 {
                     new_seeds_data.push(elem);
                 }
             }
-            seeds_data = Vec::from_iter(new_seeds_data);
+            seeds_data = Vec::from_iter(new_seeds_data.into_iter());
         }
         seeds_data
             .into_iter()
